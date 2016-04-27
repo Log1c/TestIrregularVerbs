@@ -60,7 +60,7 @@ public class TestingVerbModel {
                 String[] row = line.split(cvsSplitBy);
 
                 if (statistic) {
-                    list.add(new Verb(row[0], row[1], row[2]));
+                    list.add(new VerbStatistic(new Verb(row[0], row[1], row[2]), new Verb(row[3], row[4], row[5])));
                 } else {
                     list.add(new Verb(row[0], row[1], row[2]));
                 }
@@ -89,7 +89,9 @@ public class TestingVerbModel {
     }
 
     public void addToStatistic(Verb verbStandard, Verb verbAnswer) {
-        verbsAnswer.add(new VerbStatistic(verbStandard, verbAnswer));
+        VerbStatistic statistic = new VerbStatistic(verbStandard, verbAnswer);
+        verbsAnswer.add(statistic);
+        statistic.saveToCsv(verbStandard);
     }
 
     public void refreshCurrentVerb() {
@@ -160,6 +162,7 @@ public class TestingVerbModel {
 
     public void setAnswer(Verb verbAnswer) {
         boolean answerIsCorrect = checkAnswer(verbAnswer);
+        addToStatistic(getCurrentVerb(), verbAnswer);
         if (!answerIsCorrect) {
             showCorrectAnswer();
         } else {
@@ -167,7 +170,7 @@ public class TestingVerbModel {
         }
 
         incrementTotalAnswers(answerIsCorrect);
-        addToStatistic(getCurrentVerb(), verbAnswer);
+
     }
 
     private void setQuestion() {
