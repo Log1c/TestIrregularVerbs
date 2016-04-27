@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="118.0" prefWidth="115.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.logic.controller.reviewController">
+   <center>
+      <VBox prefHeight="130.0" prefWidth="274.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="firstForm" />
+            <TextField fx:id="secondForm" />
+            <TextField fx:id="thirdForm" />
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <AnchorPane prefHeight="39.0" prefWidth="198.0">
+         <children>
+            <HBox prefHeight="27.0" prefWidth="115.0" AnchorPane.bottomAnchor="0.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="correctlyRatio" prefHeight="25.0" prefWidth="51.0" text="Label">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button defaultButton="true" mnemonicParsing="false" onAction="#clickNext" text="Next">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </bottom>
+</BorderPane>
