@@ -1,7 +1,7 @@
 package ua.logic.entity;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import ua.logic.util.Persistence;
+
 import java.time.LocalDateTime;
 
 public class VerbStatistic {
@@ -10,10 +10,14 @@ public class VerbStatistic {
     private LocalDateTime dateTime;
 //    private String user;
 
-    public VerbStatistic(Verb verbStandard, Verb verbAnswer) {
+    public VerbStatistic(Verb verbStandard, Verb verbAnswer, LocalDateTime dateTime) {
         this.verbStandard = verbStandard;
         this.verbAnswer = verbAnswer;
-        dateTime = LocalDateTime.now();
+        this.dateTime = dateTime;
+    }
+
+    public VerbStatistic(Verb verbStandard, Verb verbAnswer) {
+        this(verbStandard, verbAnswer, LocalDateTime.now());
     }
 
     public Verb getVerbStandard() {
@@ -28,21 +32,8 @@ public class VerbStatistic {
         return dateTime;
     }
 
-    public void saveToCsv(Verb verbStandard) {
-        try(FileWriter writer = new FileWriter("irregularVerbsStatistic.csv", true)) {
-            String text = verbStandard.getFirstForm()
-                    + "," + verbStandard.getSecondForm()
-                    + "," + verbStandard.getThirdForm()
-                    + "," + getVerbAnswer().getFirstForm()
-                    + "," + getVerbAnswer().getSecondForm()
-                    + "," + getVerbAnswer().getThirdForm()
-                    +"\n";
-            writer.write(text);
 
-            //writer.flush();
-        }
-        catch(IOException ex) {
-            System.out.println(ex.getMessage());
-        }
+    public void saveToCsv() {
+        Persistence.saveToCsv(this);
     }
 }

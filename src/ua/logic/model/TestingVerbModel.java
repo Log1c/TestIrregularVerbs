@@ -2,8 +2,8 @@ package ua.logic.model;
 
 import ua.logic.entity.Verb;
 import ua.logic.entity.VerbStatistic;
+import ua.logic.util.Persistence;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,75 +23,33 @@ public class TestingVerbModel {
     private String secondFormText;
     private String thirdFormText;
 
-    private void saveToCsv() {
-        try(FileWriter writer = new FileWriter("irregularVerbsStatistic.csv", true)) {
-            for (VerbStatistic statistic : verbsAnswer) {
-                String text = statistic.getVerbAnswer().getFirstForm()
-                        + "," + statistic.getVerbAnswer().getSecondForm()
-                        + "," + statistic.getVerbAnswer().getThirdForm();
-
-                writer.write(text);
-            }
-
-            //writer.flush();
-        }
-        catch(IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    private void loadFromCsv(List list, boolean statistic) {
-        String csvFile;
-        if (statistic) {
-            csvFile = "irregularVerbsStatistic.csv";
-        } else {
-            csvFile = "irregularVerbs.csv";
-        }
-
-        BufferedReader br = null;
-        String line;
-        String cvsSplitBy = ",";
-
-        try {
-
-            br = new BufferedReader(new FileReader(csvFile));
-            while ((line = br.readLine()) != null) {
-
-                String[] row = line.split(cvsSplitBy);
-
-                if (statistic) {
-                    list.add(new VerbStatistic(new Verb(row[0], row[1], row[2]), new Verb(row[3], row[4], row[5])));
-                } else {
-                    list.add(new Verb(row[0], row[1], row[2]));
-                }
-
-            }
-
-        } catch (FileNotFoundException e) {
-            //e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+//    private void saveToCsv() {
+//        try(FileWriter writer = new FileWriter("irregularVerbsStatistic.csv", true)) {
+//            for (VerbStatistic statistic : verbsAnswer) {
+//                String text = statistic.getVerbAnswer().getFirstForm()
+//                        + "," + statistic.getVerbAnswer().getSecondForm()
+//                        + "," + statistic.getVerbAnswer().getThirdForm();
+//
+//                writer.write(text);
+//            }
+//
+//            //writer.flush();
+//        }
+//        catch(IOException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+//    }
 
     public TestingVerbModel() {
-        loadFromCsv(verbsStandard, false);
-        loadFromCsv(verbsAnswer, true);//TODO
+        Persistence.loadFromCsv(verbsStandard, false);
+        Persistence.loadFromCsv(verbsAnswer, true);//TODO
         setQuestion();
     }
 
     public void addToStatistic(Verb verbStandard, Verb verbAnswer) {
         VerbStatistic statistic = new VerbStatistic(verbStandard, verbAnswer);
         verbsAnswer.add(statistic);
-        statistic.saveToCsv(verbStandard);
+        statistic.saveToCsv();
     }
 
     public void refreshCurrentVerb() {
