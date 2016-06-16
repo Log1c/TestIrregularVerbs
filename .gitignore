@@ -1,7 +1,10 @@
 *.class
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# statistics #
+irregularVerbs.csv
+
+# git #
+vcs.xml
 
 # Package Files #
 *.jar
