@@ -1,11 +1,6 @@
 package ua.logic.model;
 
 import ua.logic.entity.Verb;
-import ua.logic.entity.VerbStatistic;
-import ua.logic.util.Persistence;
-
-import java.util.ArrayList;
-import java.util.List;
 
 enum State {SHOW_CORRECT_ANSWER, REQUEST_ANSWER}
 
@@ -14,9 +9,9 @@ public class TestingVerbModel {
     private State state;
     private Verb currentVerb;
     private final Questions questions = new Questions();
+    private final Answers answers = new Answers();
     private int totalAnswers = 0;
     private int correctAnswers = 0;
-    private List<VerbStatistic> verbsAnswer = new ArrayList<>();
     private String firstFormText;
     private String secondFormText;
     private String thirdFormText;
@@ -39,24 +34,13 @@ public class TestingVerbModel {
 //    }
 
     public TestingVerbModel() {
-        Persistence.loadFromCsv(verbsAnswer, true);//TODO
         setQuestion();
     }
 
-    public void addToStatistic(Verb verbStandard, Verb verbAnswer) {
-        VerbStatistic statistic = new VerbStatistic(verbStandard, verbAnswer);
-        verbsAnswer.add(statistic);
-        statistic.saveToCsv();
-    }
-
     public void refreshCurrentVerb() {
-        questions.removeCollectAnswerFromQuestion(verbsAnswer);
+        questions.removeCollectAnswerFromQuestion(answers.getAnswers());
 
         currentVerb = questions.getQuestion();
-    }
-
-    public Verb getCurrentVerb() {
-        return currentVerb;
     }
 
     public void incrementTotalAnswers(boolean IsCorrect) {
@@ -101,7 +85,7 @@ public class TestingVerbModel {
 
     public void setAnswer(Verb verbAnswer) {
         boolean answerIsCorrect = checkAnswer(verbAnswer);
-        addToStatistic(getCurrentVerb(), verbAnswer);
+        answers.add(getCurrentVerb(), verbAnswer);
         if (!answerIsCorrect) {
             showCorrectAnswer();
         } else {
@@ -109,7 +93,6 @@ public class TestingVerbModel {
         }
 
         incrementTotalAnswers(answerIsCorrect);
-
     }
 
     private void setQuestion() {
@@ -150,5 +133,9 @@ public class TestingVerbModel {
 
     public String getThirdFormText() {
         return thirdFormText;
+    }
+
+    public Verb getCurrentVerb() {
+        return currentVerb;
     }
 }
