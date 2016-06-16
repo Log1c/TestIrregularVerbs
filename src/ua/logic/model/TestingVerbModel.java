@@ -5,33 +5,14 @@ import ua.logic.entity.Verb;
 enum State {SHOW_CORRECT_ANSWER, REQUEST_ANSWER}
 
 public class TestingVerbModel {
-
     private State state;
     private Verb currentVerb;
     private final Questions questions = new Questions();
     private final Answers answers = new Answers();
-    private int totalAnswers = 0;
-    private int correctAnswers = 0;
+    private final Statistic statistic = new Statistic();
     private String firstFormText;
     private String secondFormText;
     private String thirdFormText;
-
-//    private void saveToCsv() {
-//        try(FileWriter writer = new FileWriter("irregularVerbsStatistic.csv", true)) {
-//            for (VerbStatistic statistic : verbsAnswer) {
-//                String text = statistic.getVerbAnswer().getFirstForm()
-//                        + "," + statistic.getVerbAnswer().getSecondForm()
-//                        + "," + statistic.getVerbAnswer().getThirdForm();
-//
-//                writer.write(text);
-//            }
-//
-//            //writer.flush();
-//        }
-//        catch(IOException ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//    }
 
     public TestingVerbModel() {
         setQuestion();
@@ -43,23 +24,8 @@ public class TestingVerbModel {
         currentVerb = questions.getQuestion();
     }
 
-    public void incrementTotalAnswers(boolean IsCorrect) {
-        totalAnswers++;
-        if (IsCorrect) {
-            correctAnswers++;
-        }
-    }
-
-    public int getTotalAnswers() {
-        return totalAnswers;
-    }
-
-    public int getCorrectAnswers() {
-        return correctAnswers;
-    }
-
     public String getStatistic() {
-        return "" + getCorrectAnswers() + "/" + getTotalAnswers();
+        return statistic.getStatistic();
     }
 
     public boolean checkAnswer(Verb verbAnswer) {
@@ -92,7 +58,7 @@ public class TestingVerbModel {
             setQuestion();
         }
 
-        incrementTotalAnswers(answerIsCorrect);
+        statistic.incrementTotalAnswers(answerIsCorrect);
     }
 
     private void setQuestion() {

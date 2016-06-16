@@ -11,6 +11,23 @@ public class Persistence {
     private Persistence() {
     }
 
+    //    private void saveToCsv() {
+//        try(FileWriter writer = new FileWriter("irregularVerbsStatistic.csv", true)) {
+//            for (VerbStatistic statistic : verbsAnswer) {
+//                String text = statistic.getVerbAnswer().getFirstForm()
+//                        + "," + statistic.getVerbAnswer().getSecondForm()
+//                        + "," + statistic.getVerbAnswer().getThirdForm();
+//
+//                writer.write(text);
+//            }
+//
+//            //writer.flush();
+//        }
+//        catch(IOException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+//    }
+
     public static void loadFromCsv(List list, boolean statistic) {
         String csvFile;
         if (statistic) {
