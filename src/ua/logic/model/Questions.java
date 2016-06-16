@@ -17,10 +17,6 @@ public class Questions {
         Persistence.loadFromCsv(verbsStandard, false);
     }
 
-    public List<Verb> getVerbsStandard() {
-        return verbsStandard;
-    }
-
     public Verb getQuestion() {
         int counter = (int) (Math.random() * verbsStandard.size());
 

@@ -18,12 +18,6 @@ public class TestingVerbModel {
         setQuestion();
     }
 
-    public void refreshCurrentVerb() {
-        questions.removeCollectAnswerFromQuestion(answers.getAnswers());
-
-        currentVerb = questions.getQuestion();
-    }
-
     public String getStatistic() {
         return statistic.getStatistic();
     }
@@ -63,7 +57,9 @@ public class TestingVerbModel {
 
     private void setQuestion() {
         state = State.REQUEST_ANSWER;
-        refreshCurrentVerb();
+        questions.removeCollectAnswerFromQuestion(answers.getAnswers());
+
+        currentVerb = questions.getQuestion();
 
         int random = (int) (Math.random() * 3);
         switch (random) {
